@@ -18,8 +18,9 @@ def getValueBcoin():
     listValuesBcoin = getAPIexternaBCOIN()
     values = {
         'BRL': listValuesBcoin[0],
-        'DIF': listValuesBcoin[1],
-        'B64': listValuesBcoin[2],
+        'USD': listValuesBcoin[1],
+        'DIF': listValuesBcoin[2],
+        'B64': listValuesBcoin[3],
     }
     return values
 
@@ -29,9 +30,9 @@ def getValueSENS():
     listValuesSENS = getAPIexternaSENS()
     values = {
         'BRL': listValuesSENS[0],
-        'DIF': listValuesSENS[1],
-        'B64': listValuesSENS[2],
-
+        'USD': listValuesSENS[1],
+        'DIF': listValuesSENS[2],
+        'B64': listValuesSENS[3],
     }
     return values
 
@@ -39,20 +40,22 @@ def getValueSENS():
 def getAPIexternaBCOIN():
     count = 0
     cg = CoinGeckoAPI()
-    reqBcoin = cg.get_price(ids='bomber-coin', vs_currencies='brl',
+    reqBcoin = cg.get_price(ids='bomber-coin', vs_currencies='brl, usd',
                             include_24hr_change=True)
     reqChart = cg.get_coin_market_chart_by_id(id='bomber-coin', vs_currency='brl',
                                               days='1')
-    priceBcoin = float(reqBcoin['bomber-coin']['brl'])
+    priceBcoinBrl = float(reqBcoin['bomber-coin']['brl'])
+    priceBcoinUsd = float(reqBcoin['bomber-coin']['usd'])
     difBcoin = reqBcoin['bomber-coin']['brl_24h_change']
-    priceFormatBcoin = '{:.2f}'.format(priceBcoin)
-    difFormatBcoin = '{:.2f}'.format(difBcoin)
+    priceFormatBcoinBrl = '{:.2f}'.format(priceBcoinBrl)
+    priceFormatBcoinUsd = '{:.2f}'.format(priceBcoinUsd)
+    difFormatBcoinBrl = '{:.2f}'.format(difBcoin)
     json = reqChart['prices']
     json = json[len(json)-10:len(json)]
     for value in json:
         timeInt = int(value[0])
         time = datetime.utcfromtimestamp(
-            timeInt/1000).strftime('%H:%M:%S')
+            timeInt/1000).strftime('%H:%M')
         value[0] = time
         json[count] = value
         data1 = pd.DataFrame(json, columns=['Hour', 'Price'])
@@ -71,7 +74,6 @@ def getAPIexternaBCOIN():
         fig.update_layout({
             'title_font_color': 'white'})
         fig.update_traces({'line_color': 'red'})
-        fig.show()
         fig.write_image('bcoin.png')
         with open("bcoin.png", "rb") as img_file:
             b64_string = base64.b64encode(img_file.read())
@@ -80,26 +82,28 @@ def getAPIexternaBCOIN():
             file_input = open('b64_bcoin.txt')
             dataBcoin = file_input.read()
         count = count + 1
-    return(priceFormatBcoin, difFormatBcoin, dataBcoin)
+    return(priceFormatBcoinBrl, priceFormatBcoinUsd, difFormatBcoinBrl, dataBcoin)
 
 
 def getAPIexternaSENS():
     count = 0
     cg = CoinGeckoAPI()
     reqSens = cg.get_price(
-        ids='senspark', vs_currencies='brl', include_24hr_change=True)
+        ids='senspark', vs_currencies='brl, usd', include_24hr_change=True)
     reqChart = cg.get_coin_market_chart_by_id(id='senspark', vs_currency='brl',
                                               days='1')
-    priceSens = float(reqSens['senspark']['brl'])
+    priceSensBrl = float(reqSens['senspark']['brl'])
+    priceSensUsd = float(reqSens['senspark']['usd'])
     difSens = reqSens['senspark']['brl_24h_change']
-    priceFormatSens = '{:.2f}'.format(priceSens)
-    difFormatSens = '{:.2f}'.format(difSens)
+    priceFormatSensBrl = '{:.2f}'.format(priceSensBrl)
+    priceFormatSensUsd = '{:.2f}'.format(priceSensUsd)
+    difFormatSensBrl = '{:.2f}'.format(difSens)
     json = reqChart['prices']
     json = json[len(json)-10:len(json)]
     for value in json:
         timeInt = int(value[0])
         time = datetime.utcfromtimestamp(
-            timeInt/1000).strftime('%H:%M:%S')
+            timeInt/1000).strftime('%H:%M')
         value[0] = time
         json[count] = value
         data1 = pd.DataFrame(json, columns=['Hour', 'Price'])
@@ -118,7 +122,6 @@ def getAPIexternaSENS():
         fig.update_layout({
             'title_font_color': 'white'})
         fig.update_traces({'line_color': 'red'})
-        fig.show()
         fig.write_image('SENS.png')
         with open("SENS.png", "rb") as img_file:
             b64_string = base64.b64encode(img_file.read())
@@ -127,7 +130,7 @@ def getAPIexternaSENS():
             file_input = open('b64_sens.txt')
             dataSens = file_input.read()
         count = count + 1
-    return(priceFormatSens, difFormatSens, dataSens)
+    return(priceFormatSensBrl, priceFormatSensUsd, difFormatSensBrl, dataSens)
 
 
 if __name__ == '__main__':
