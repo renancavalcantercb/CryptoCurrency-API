@@ -9,7 +9,7 @@ Monte a URL como `/api/{moeda}` substituindo `moeda` pelo Token que você quer o
 | `B64  ` | Imagem do gráfico de variação da última hora em BASE64. |
 | `BRL` | Último valor do BCOIN em Reais. |
 | `DIF` | Variação do valor em porcentagem das últimas 24 horas. |
-
+| `USD` | Último valor do BCOIN em dólares. |
 
 + /api/bcoin
 
@@ -18,9 +18,10 @@ Monte a URL como `/api/{moeda}` substituindo `moeda` pelo Token que você quer o
     + Body
 
             {
-                "B64": "iVBORw0KGgoAAAANSUhEUgAA…kzj4i8AAAAASUVORK5CYII=",
+                "B64": "iVBORw0KGgoAAAANSUhEUgAA…eneDAAAAABJRU5ErkJggg==",
                 "BRL": "0.79",
-                "DIF": "16.87",
+                "DIF": "-7.29",
+                "USD": "0.17",
             }
 
 + /api/sens
@@ -30,9 +31,10 @@ Monte a URL como `/api/{moeda}` substituindo `moeda` pelo Token que você quer o
     + Body
 
             {
-                "B64": "iVBORw0KGgoAAAANSUhEUgAA…CqONe8AAAAASUVORK5CYII=",
-                "BRL": "1.66",
-                "DIF": "4.35",
+                "B64": "iVBORw0KGgoAAAANSUhEUgAA…ojYpAAAAABJRU5ErkJggg==",
+                "BRL": "1.12",
+                "DIF": "-24.49",
+                "USD": "0.24",
             }
 
 
