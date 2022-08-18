@@ -46,7 +46,7 @@ def getValueBOMB():
         'DIF': listValuesBOMB[2],
         'B64': listValuesBOMB[3],
     }
-    return 
+    return values
 
 
 def getAPIexternaBCOIN():
