@@ -3,7 +3,7 @@
 O Bombcrypto Coins disponibiliza uma API REST que retorna o preço do token escolhido (BCOIN ou SENS), a diferença de valor baseado nas últimas 24 horas e uma imagem do gráfico de varição da última hora.
 
 ### Utilizando o código de acesso [GET]
-Monte a URL como `/api/{moeda}` substituindo `moeda` pelo Token que você quer obter as informações, no momento existe somente duas moedas que é possivel obter sendo ela `bcoin` ou `sens`.
+Monte a URL como `/api/{moeda}` substituindo `moeda` pelo Token que você quer obter as informações, no momento existe somente duas moedas que é possivel obter sendo ela `bcoin`, `sens` ou `bomb`.
 | Parâmetro | Descrição |
 |---|---|
 | `B64  ` | Imagem do gráfico de variação da última hora em BASE64. |
