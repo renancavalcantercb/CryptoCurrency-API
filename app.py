@@ -13,7 +13,7 @@ def homepage():
     return 'Welcome to the Bombcrypto Tokens API'
 
 
-@app.route('/api/bcoin/', methods=['GET'])
+@app.route('/api/bcoin', methods=['GET'])
 def getValueBcoin():
     listValuesBcoin = getAPIexternaBCOIN()
     values = {
@@ -25,7 +25,7 @@ def getValueBcoin():
     return values
 
 
-@app.route('/api/sens/', methods=['GET'])
+@app.route('/api/sens', methods=['GET'])
 def getValueSENS():
     listValuesSENS = getAPIexternaSENS()
     values = {
@@ -37,7 +37,7 @@ def getValueSENS():
     return values
 
 
-@app.route('/api/bombcrypto-coin/', methods=['GET'])
+@app.route('/api/bomb', methods=['GET'])
 def getValueBOMB():
     listValuesBOMB = getAPIexternaBOMB()
     values = {
