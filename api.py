@@ -19,12 +19,12 @@ class Crypto():
 
     """
 
-    def __init__(self, id, currency, lastdaychange = False, chart = False):
+    def __init__(self, id, currency, lastdaychange=False, chart=False):
         self.id = id
         self.currency = currency
         self.lastdaychange = lastdaychange
         self.chart = chart
-    
+
     def crypto_price(self):
         values = {}
         cg = CoinGeckoAPI()
@@ -32,14 +32,16 @@ class Crypto():
             try:
                 req = cg.get_price(
                     ids=self.id, vs_currencies=self.currency[i].lower(), include_24hr_change=self.lastdaychange)
-                price = '{:.2f}'.format(float(req[self.id][self.currency[i].lower()]))
+                price = '{:.3f}'.format(
+                    float(req[self.id][self.currency[i].lower()]))
                 values[self.currency[i].upper()] = price
-            except KeyError: 
+            except KeyError:
                 raise CurrencyNotFound()
         if self.lastdaychange == True:
-            dif = '{:.2f}'.format(float(req[self.id][str(self.currency[-1].lower() + '_24h_change')]))
+            dif = '{:.3f}'.format(
+                float(req[self.id][str(self.currency[-1].lower() + '_24h_change')]))
             values['DIF'] = dif
         if self.chart == True:
-            values['B64'] = CryptoChart().chart(self.id, self.currency[-1].lower())
-        return values 
-
+            values['B64'] = CryptoChart().chart(
+                self.id, self.currency[-1].lower())
+        return values
