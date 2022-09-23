@@ -1,47 +1,39 @@
 from pycoingecko import CoinGeckoAPI
+
 from exceptions.CurrencyNotFound import CurrencyNotFound
-from api_chart import CryptoChart
 
 
-class Crypto():
+class Crypto:
     """
-    Create a request to get a Bcoin price in Brl and USD, and difference in the last 24 hours.
+        Create a request to get a Bcoin price in Brl and USD, and difference in the last 24 hours.
 
-    Attributes:
-    --------
-        :param str id: Id of the crypto you want to know the price.
-        :param list currency: Currency to know the value of the chosen crypto.
-        :param str lastdaychange: Parameter to know what was the percentage variation in the last 24 hours of the currency.
+        :param str id: ID of the crypto you want to know the price.
+        :param list currency: Currency to know the
+        value of the chosen crypto.
 
-    Example:
-    --------
-        >>> bcoin = Crypto('bomber-coin', ['brl', 'usd']).crypto_price()
 
+        Example:
+            >>> bcoin = Crypto('bomber-coin', ['brl']).crypto_price()
+            >>> bcoin = Crypto('bomber-coin', ['brl', 'usd']).crypto_price()
     """
 
-    def __init__(self, id, currency, lastdaychange=False, chart=False):
+    def __init__(self, id: str, currency: list):
         self.id = id
         self.currency = currency
-        self.lastdaychange = lastdaychange
-        self.chart = chart
 
-    def crypto_price(self):
+    def crypto_price(self) -> dict:
         values = {}
         cg = CoinGeckoAPI()
         for i in range(len(self.currency)):
             try:
                 req = cg.get_price(
-                    ids=self.id, vs_currencies=self.currency[i].lower(), include_24hr_change=self.lastdaychange)
-                price = '{:.3f}'.format(
+                    ids=self.id, vs_currencies=self.currency[i].lower(), include_24hr_change=True)
+                price = '{:.2f}'.format(
                     float(req[self.id][self.currency[i].lower()]))
                 values[self.currency[i].upper()] = price
             except KeyError:
                 raise CurrencyNotFound()
-        if self.lastdaychange == True:
-            dif = '{:.3f}'.format(
-                float(req[self.id][str(self.currency[-1].lower() + '_24h_change')]))
-            values['DIF'] = dif
-        if self.chart == True:
-            values['B64'] = CryptoChart().chart(
-                self.id, self.currency[-1].lower())
+            dif = '{:.2f}'.format(
+                float(req[self.id][str(self.currency[i].lower() + '_24h_change')]))
+        values['DIF'] = dif
         return values
