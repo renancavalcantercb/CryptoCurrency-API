@@ -1,44 +1,51 @@
-# Bombcrypto Coins API
+# Crypto API
 
-O Bombcrypto Coins disponibiliza uma API REST que retorna o preço do token escolhido (BCOIN ou SENS), a diferença de valor baseado nas últimas 24 horas e uma imagem do gráfico de varição da última hora.
+The Crypto API provides a Rest API that returns the price of the chosen token, in the currency of your choice and the difference in value based on the last 24 hours.
 
 ### Utilizando o código de acesso [GET]
-Monte a URL como `/api/{moeda}` substituindo `moeda` pelo Token que você quer obter as informações, no momento existe somente duas moedas que é possivel obter sendo ela `bcoin`, `sens` ou `bomb`.
-| Parâmetro | Descrição |
+Set URL to `/{id}/{currency}` where `id` is the id of the cryptocurrency you want to know the price, if you want to know in more than one currency, put those separated by a comma, and `currency` is the currency you want to know the price of that crypto .
+
+| Parameter | Description |
 |---|---|
-| `B64  ` | Imagem do gráfico de variação da última hora em BASE64. |
-| `BRL` | Último valor do BCOIN em Reais. |
-| `DIF` | Variação do valor em porcentagem das últimas 24 horas. |
-| `USD` | Último valor do BCOIN em dólares. |
+| `BRL` | Latest value of the chosen crypto in Reais
+| `USD` | Latest value of the chosen crypto in dollars |
+| `DIF` | Variation of the value in percentage of the last 24 hours. |
 
-+ /api/bcoin
+### Example
 
-+ Response 200 ()
-
-    + Body
-
-            {
-                "B64": "iVBORw0KGgoAAAANSUhEUgAA…eneDAAAAABJRU5ErkJggg==",
-                "BRL": "0.79",
-                "DIF": "-7.29",
-                "USD": "0.17",
-            }
-
-+ /api/sens
++ /bomber-coin/brl, usd
 
 + Response 200 ()
 
-    + Body
+    + Response body
+
+          {
+            "BRL": "0.07",
+            "USD": "0.01",
+            "DIF": "2.24"
+          }
+
+
++ /bitcoin/brl
+
++ Response 200 ()
+
+    + Response body
 
             {
-                "B64": "iVBORw0KGgoAAAANSUhEUgAA…ojYpAAAAABJRU5ErkJggg==",
-                "BRL": "1.12",
-                "DIF": "-24.49",
-                "USD": "0.24",
+              "BRL": "103614.00",
+              "DIF": "2.30"
             }
 
++ /dogecoin/eur, cad
 
++ Response 200 ()
 
-![Gif da Maga do Bombcrypto andando](https://media.giphy.com/media/EHxAswWZMz3d9UCKUB/giphy.gif)![Gif do Vampiro do Bombcrypto andando](https://media.giphy.com/media/oRh8wlREMMlD075qc3/giphy.gif)![Gif do Pistoleiro do Bombcrypto andando](https://media.giphy.com/media/JuJFJDVGnpfC9nYB9G/giphy.gif)![Gif do Guerreiro do Bombcrypto andando](https://media.giphy.com/media/BB5PKWbZJ4syzioAR9/giphy.gif)![Gif do Pepe do Bombcrypto andando](https://media.giphy.com/media/5aNxJf2gOIV2QfKPss/giphy.gif)![Gif do Doge do Bombcrypto andando](https://media.giphy.com/media/KyaiTSSlu4Qr6pXcyU/giphy.gif)
+    + Response body
 
+            {
+              "EUR": "0.06",
+              "CAD": "0.08",
+              "DIF": "0.82"
+            }
 
