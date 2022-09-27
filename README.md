@@ -2,7 +2,7 @@
 
 The Crypto API provides a Rest API that returns the price of the chosen token, in the currency of your choice and the difference in value based on the last 24 hours.
 
-### Utilizando o código de acesso [GET]
+### Using the access code [GET]
 Set URL to `/{id}/{currency}` where `id` is the id of the cryptocurrency you want to know the price, if you want to know in more than one currency, put those separated by a comma, and `currency` is the currency you want to know the price of that crypto .
 
 | Parameter | Description |
