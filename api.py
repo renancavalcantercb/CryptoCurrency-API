@@ -4,36 +4,34 @@ from exceptions.CurrencyNotFound import CurrencyNotFound
 
 
 class Crypto:
-    """
-        Create a request to get a Bcoin price in Brl and USD, and difference in the last 24 hours.
 
-        :param str id: ID of the crypto you want to know the price.
-        :param list currency: Currency to know the
-        value of the chosen crypto.
+    def __init__(self):
+        self.cg = CoinGeckoAPI()
 
+    def crypto_price(self, id: str, currency: list) -> dict:
+        """
+            Create a request to get a Bcoin price in Brl and USD, and difference in the last 24 hours.
 
-        Example:
-            >>> bcoin = Crypto('bomber-coin', ['brl']).crypto_price()
-            >>> bcoin = Crypto('bomber-coin', ['brl', 'usd']).crypto_price()
-    """
+            :param str id: ID of the crypto you want to know the price.
+            :param list currency: Currency to know the
+            value of the chosen crypto.
 
-    def __init__(self, id: str, currency: list):
-        self.id = id
-        self.currency = currency
+            :return: dict with the price of the crypto in the chosen currency.
+            :rtype: dict
 
-    def crypto_price(self) -> dict:
+            :raises CurrencyNotFound: If the currency is not found.
+
+            :example
+                >>> crypto_price('bomber-coin', ['brl', 'usd'])
+                {'BRL': '0.01', 'USD': '0.00', 'DIF': '-0.01'}
+        """
+
         values = {}
-        cg = CoinGeckoAPI()
-        for i in range(len(self.currency)):
+        for c in currency:
             try:
-                req = cg.get_price(
-                    ids=self.id, vs_currencies=self.currency[i].lower(), include_24hr_change=True)
-                price = '{:.2f}'.format(
-                    float(req[self.id][self.currency[i].lower()]))
-                values[self.currency[i].upper()] = price
+                values[c.upper()] = self.cg.get_price(ids=id, vs_currencies=c)[id][c]
             except KeyError:
                 raise CurrencyNotFound()
-            dif = '{:.2f}'.format(
-                float(req[self.id][str(self.currency[i].lower() + '_24h_change')]))
-        values['DIF'] = dif
+        values['DIF'] = self.cg.get_coin_by_id(id=id)['market_data']['price_change_percentage_24h']
         return values
+
