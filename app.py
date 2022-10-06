@@ -17,12 +17,18 @@ class Request(Resource):
     ns = Namespace('Crypto',
                    description='Create a request to get a Bcoin price in Brl and USD, and difference in the last 24 hours.')
 
-    def get(self, id, currency):
+    def get(self, id: str, currency: list) -> dict:
 
-        currency = re.sub(r'\s+', '', currency).split(',')
+        """
+            Create a request to get a Bcoin price in Brl and USD, and difference in the last 24 hours.
+        :param id:
+        :param currency:
+        :return:
+        """
+        crypto = Crypto()
+        currency = re.split(', |,', currency)
         try:
-            req = Crypto(id, currency).crypto_price()
-            return req
+            return crypto.crypto_price(id, currency)
         except Exception as e:
             abort(404, e)
 
